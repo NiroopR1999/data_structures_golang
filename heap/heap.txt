@@ -1,0 +1,175 @@
+HEAP - QUICK NOTES
+==================
+
+WHAT IS A HEAP?
+----------------
+A Heap is a complete/nearly complete binary tree that follows a heap property.
+
+A heap is NOT a sorted tree.
+
+
+COMPLETE BINARY TREE
+--------------------
+All levels are completely filled except possibly the last.
+The last level is filled from LEFT to RIGHT without gaps.
+
+
+TYPES OF HEAPS
+--------------
+
+1. MIN HEAP
+Parent <= Children
+
+Example:
+
+        5
+      /   \
+    10     15
+   /  \   /
+ 20   40 30
+
+Root = smallest element
+
+
+2. MAX HEAP
+Parent >= Children
+
+Example:
+
+        40
+      /    \
+    20      30
+   /  \    /
+ 10    5  15
+
+Root = largest element
+
+
+HEAP PROPERTY
+-------------
+Min Heap:
+    Parent <= Children
+
+Max Heap:
+    Parent >= Children
+
+Important:
+A heap is NOT fully sorted.
+Only the parent-child relationship is guaranteed.
+
+
+ARRAY REPRESENTATION
+--------------------
+Because a heap is a complete binary tree,
+it can be stored efficiently in an array.
+
+Tree:
+
+        5
+      /   \
+    10     15
+   /  \   /
+ 20   40 30
+
+Array:
+
+[5, 10, 15, 20, 40, 30]
+
+
+INDEX FORMULAS
+--------------
+For an element at index i:
+
+Parent = (i - 1) / 2
+
+Left child = 2*i + 1
+
+Right child = 2*i + 2
+
+last non-leaf index = n/2 - 1
+
+
+MAIN OPERATIONS
+---------------
+
+1. PEEK
+Returns the root.
+
+Min Heap -> minimum element
+Max Heap -> maximum element
+
+Time: O(1)
+
+
+2. INSERT
+- Add the new element at the end.
+- Compare it with its parent.
+- If heap property is violated, move it upward.
+- This is called SIFT UP / BUBBLE UP.
+
+Time: O(log n)
+
+
+3. REMOVE ROOT
+- Replace root with the last element.
+- Remove the last element.
+- Compare the new root with its children.
+- Move it downward until heap property is restored.
+- This is called SIFT DOWN / BUBBLE DOWN.
+
+Time: O(log n)
+
+
+COMPLEXITIES
+------------
+Peek          O(1)
+Insert        O(log n)
+Remove root   O(log n)
+Search        O(n)
+
+
+KEY IDEA
+--------
+Heap = Complete Binary Tree + Heap Property
+
+Insert:
+    Add at end -> Sift Up
+
+Remove root:
+    Move last to root -> Sift Down
+
+
+NOTE:
+
+ 1. Every level except the last must be completely filled. The last level can have missing nodes, but only toward the right.
+2. The last level must be filled from left to right. this makes the binary tree a complete binary tree
+⁠   [1][2][3][4][5][6][ ]
+                      ↑
+                     okay
+⁠[1][2][3][4][5][ ][7]
+                ↑
+                gap → not complete (incomplete binary tree)
+
+3. ⁠A complete binary tree is sometimes called a nearly complete binary tree. All levels are completely filled except possibly the last, and the last level is filled from left to right.
+
+
+
+HEAPIFY
+
+Heapify builds a heap from an existing array.
+
+Why O(n)?
+- Most nodes are near the bottom.
+- Bottom nodes need little or no sifting.
+- Only a few nodes near the top can move many levels.
+- So total work is O(n).
+
+Heapify:
+    O(n)
+
+Building heap using repeated Insert:
+    O(n log n)
+
+Remember:
+    Heapify → O(n)
+    Insert n elements → O(n log n)

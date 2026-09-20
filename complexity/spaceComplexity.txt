@@ -1,0 +1,1858 @@
+# SPACE COMPLEXITY
+
+1. WHAT IS SPACE COMPLEXITY?
+
+---
+
+Space complexity tells us how much MEMORY an algorithm needs as the input size grows.
+
+It is usually expressed using Big O.
+
+Example:
+
+func findMax(arr []int) int {
+max := arr[0]
+
+```
+for _, x := range arr {
+    if x > max {
+        max = x
+    }
+}
+
+return max
+```
+
+}
+
+The array already exists as input.
+
+Extra variables:
+
+* max
+* x
+
+These do not grow with n.
+
+Therefore:
+
+Auxiliary Space = O(1)
+
+2. AUXILIARY SPACE VS INPUT SPACE
+
+---
+
+This distinction is very important in interviews.
+
+Input space:
+Memory occupied by the input itself.
+
+Auxiliary space:
+Additional memory used by the algorithm.
+
+Example:
+
+arr contains n elements.
+
+Input space:
+O(n)
+
+findMax() uses only a few variables:
+
+Auxiliary space:
+O(1)
+
+So when interviewers ask for "space complexity", they usually mean:
+
+```
+Auxiliary / Extra Space
+```
+
+## 3. LOOPING DOES NOT AUTOMATICALLY MEAN O(n) SPACE
+
+Example:
+
+for _, x := range arr {
+fmt.Println(x)
+}
+
+The algorithm processes n elements.
+
+But it does not store all of them.
+
+Therefore:
+
+Time  = O(n)
+Space = O(1)
+
+4. STORING DATA CHANGES SPACE COMPLEXITY
+
+---
+
+Example:
+
+result := make([]int, 0)
+
+for _, x := range arr {
+result = append(result, x)
+}
+
+The result slice can contain n elements.
+
+Therefore:
+
+Time  = O(n)
+Space = O(n)
+
+5. SIMPLE RULE
+
+---
+
+Ask:
+
+"How much EXTRA DATA can exist in memory at the same time?"
+
+If the amount stays constant:
+
+```
+O(1)
+```
+
+If it grows proportionally with n:
+
+```
+O(n)
+```
+
+If it grows as n²:
+
+```
+O(n²)
+```
+
+## 6. O(1) SPACE
+
+Only a fixed number of variables are used.
+
+Example:
+
+func sum(arr []int) int {
+total := 0
+
+```
+for _, x := range arr {
+    total += x
+}
+
+return total
+```
+
+}
+
+Variables:
+total
+x
+
+They don't grow with n.
+
+Space:
+
+```
+O(1)
+```
+
+## 7. O(n) SPACE
+
+If we store up to n elements.
+
+Example:
+
+seen := make(map[int]bool)
+
+for _, x := range arr {
+seen[x] = true
+}
+
+In the worst case, all n elements are unique.
+
+The map stores n entries.
+
+Space:
+
+```
+O(n)
+```
+
+## 8. MAP / SET / SLICE / QUEUE / STACK
+
+The data structure itself does NOT determine the complexity.
+
+The important question is:
+
+"How many elements can it contain?"
+
+Examples:
+
+map containing n elements:
+O(n)
+
+slice containing n elements:
+O(n)
+
+queue containing n elements:
+O(n)
+
+stack containing n elements:
+O(n)
+
+set containing n elements:
+O(n)
+
+9. NESTED LOOPS AND SPACE
+
+---
+
+Nested loops do NOT automatically mean O(n²) space.
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+fmt.Println(i, j)
+}
+}
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(1)
+```
+
+Why?
+
+Because only i and j are stored.
+
+We are not storing n² values.
+
+10. RECURSION USES SPACE
+
+---
+
+Every recursive function call uses stack memory.
+
+Example:
+
+func countDown(n int) {
+if n == 0 {
+return
+}
+
+```
+countDown(n - 1)
+```
+
+}
+
+Call stack:
+
+countDown(5)
+countDown(4)
+countDown(3)
+countDown(2)
+countDown(1)
+countDown(0)
+
+Maximum active calls:
+
+```
+n
+```
+
+Therefore:
+
+Space = O(n)
+
+11. RECURSION WITH LOGARITHMIC DEPTH
+
+---
+
+Example:
+
+func solve(n int) {
+if n <= 1 {
+return
+}
+
+```
+solve(n / 2)
+```
+
+}
+
+Each call cuts n in half.
+
+Example:
+
+n = 16
+
+16
+8
+4
+2
+1
+
+Number of active calls:
+
+```
+log₂(n)
+```
+
+Therefore:
+
+Space = O(log n)
+
+12. IMPORTANT RECURSION RULE
+
+---
+
+For recursion, space depends on:
+
+```
+Maximum number of ACTIVE recursive calls at once.
+```
+
+NOT:
+
+```
+Total number of recursive calls made.
+```
+
+## 13. TREE RECURSION
+
+Example:
+
+```
+         A
+       /   \
+      B     C
+     / \   / \
+    D   E F   G
+```
+
+A DFS recursion may have many total calls.
+
+But only one path is active at a time.
+
+For a balanced binary tree:
+
+```
+Height = O(log n)
+```
+
+Therefore recursive DFS space:
+
+```
+O(log n)
+```
+
+For a completely skewed tree:
+
+A
+
+B
+
+C
+
+D
+
+E
+
+Height:
+
+```
+O(n)
+```
+
+Therefore:
+
+Space = O(n)
+
+14. BFS SPACE
+
+---
+
+BFS uses a queue.
+
+For a graph:
+
+```
+visited = O(V)
+queue   = O(V)
+```
+
+Therefore:
+
+Space = O(V)
+
+where V = number of vertices.
+
+15. DFS SPACE
+
+---
+
+DFS typically uses:
+
+```
+visited
+recursion stack / explicit stack
+```
+
+For a graph:
+
+Space = O(V)
+
+For a tree, recursive DFS is often described as:
+
+```
+O(h)
+```
+
+where h = tree height.
+
+Balanced tree:
+
+```
+O(log n)
+```
+
+Skewed tree:
+
+```
+O(n)
+```
+
+## 16. MATRIX / 2D ARRAY
+
+Suppose we create:
+
+matrix[n][n]
+
+Number of stored elements:
+
+```
+n × n = n²
+```
+
+Therefore:
+
+Space = O(n²)
+
+17. GRAPH REPRESENTATION
+
+---
+
+Adjacency List:
+
+```
+Space = O(V + E)
+```
+
+where:
+
+V = vertices
+E = edges
+
+Adjacency Matrix:
+
+```
+Space = O(V²)
+```
+
+## 18. OUTPUT SPACE
+
+Sometimes the algorithm produces output that itself requires memory.
+
+Example:
+
+func double(arr []int) []int {
+result := make([]int, len(arr))
+
+```
+for i, x := range arr {
+    result[i] = x * 2
+}
+
+return result
+```
+
+}
+
+The result contains n elements.
+
+Output space:
+
+```
+O(n)
+```
+
+Auxiliary space depends on whether the output is counted.
+
+In interviews, clarify whether they want:
+
+```
+Auxiliary Space
+```
+
+or
+
+```
+Total Space including Output
+```
+
+## 19. MULTIPLE DATA STRUCTURES
+
+Add the space requirements.
+
+Example:
+
+map:
+O(n)
+
+queue:
+O(n)
+
+Total:
+
+```
+O(n) + O(n)
+= O(2n)
+= O(n)
+```
+
+Another example:
+
+map:
+O(n)
+
+matrix:
+O(n²)
+
+Total:
+
+```
+O(n) + O(n²)
+= O(n²)
+```
+
+Keep the dominant term.
+
+20. CONSTANTS ARE DROPPED
+
+---
+
+Example:
+
+Two arrays of size n:
+
+```
+O(n) + O(n)
+
+= O(2n)
+```
+
+Drop constants:
+
+```
+O(n)
+```
+
+## 21. TIME AND SPACE ARE INDEPENDENT
+
+An algorithm can have:
+
+```
+Time  = O(n)
+Space = O(1)
+```
+
+Example:
+
+Find maximum in an array.
+
+Or:
+
+```
+Time  = O(n)
+Space = O(n)
+```
+
+Example:
+
+Copy an array.
+
+Or:
+
+```
+Time  = O(n²)
+Space = O(1)
+```
+
+Example:
+
+Nested loops that only compare/print values.
+
+22. IMPORTANT EXAMPLE
+
+---
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+// process
+}
+}
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(1)
+```
+
+Because i and j are reused.
+
+Now:
+
+result := [][]int{}
+
+for i := 0; i < n; i++ {
+row := []int{}
+
+```
+for j := 0; j < n; j++ {
+    row = append(row, i+j)
+}
+
+result = append(result, row)
+```
+
+}
+
+Now we store n² values.
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(n²)
+```
+
+## 23. "AT THE SAME TIME" IS IMPORTANT
+
+Space complexity is about memory that needs to be alive simultaneously.
+
+Example:
+
+for i := 0; i < n; i++ {
+temp := make([]int, 100)
+process(temp)
+}
+
+Even though a new slice is created every iteration, only a fixed-size slice is needed at a time.
+
+Ignoring implementation details such as allocator behavior:
+
+Space = O(1)
+
+But:
+
+result := [][]int{}
+
+for i := 0; i < n; i++ {
+temp := make([]int, n)
+result = append(result, temp)
+}
+
+Now all rows are retained.
+
+Space:
+
+```
+O(n²)
+```
+
+## 24. SORTING ALGORITHMS
+
+Common auxiliary space:
+
+Merge Sort:
+O(n)
+
+Heap Sort:
+O(1)
+
+Quick Sort:
+Average: O(log n)
+Worst:   O(n)
+
+The extra space in Quick Sort mainly comes from the recursion stack.
+
+25. MONOTONIC QUEUE EXAMPLE
+
+---
+
+Sliding Window Maximum:
+
+The deque can contain at most k indices.
+
+Therefore:
+
+Space = O(k)
+
+If k <= n, this can also be expressed as:
+
+O(n) worst case.
+
+26. HASH MAP EXAMPLE
+
+---
+
+Two Sum:
+
+seen := make(map[int]int)
+
+For every element:
+
+```
+store it in the map
+```
+
+Worst case:
+
+```
+n elements stored
+```
+
+Therefore:
+
+Time  = O(n)
+Space = O(n)
+
+27. COMMON SPACE COMPLEXITIES
+
+---
+
+O(1)
+Constant extra memory
+
+O(log n)
+Logarithmic recursion/stack
+
+O(n)
+Linear storage
+
+O(n log n)
+Less common for auxiliary memory
+
+O(n²)
+Matrix / n × n storage
+
+O(2ⁿ)
+Usually associated with exponential-sized generated results
+
+O(n!)
+Can occur when generating all permutations
+
+28. HOW TO CALCULATE SPACE COMPLEXITY
+
+---
+
+STEP 1:
+Identify every extra data structure.
+
+Examples:
+
+```
+map
+set
+slice
+queue
+stack
+recursion stack
+matrix
+```
+
+STEP 2:
+Determine the maximum number of elements each can hold.
+
+STEP 3:
+Calculate their space.
+
+STEP 4:
+Add them.
+
+STEP 5:
+Drop constants and lower-order terms.
+
+Example:
+
+map:
+O(n)
+
+queue:
+O(n)
+
+recursion:
+O(log n)
+
+Total:
+
+```
+O(n) + O(n) + O(log n)
+
+= O(n)
+```
+
+## 29. QUICK INTERVIEW CHECKLIST
+
+When asked for space complexity, ask yourself:
+
+1. Am I creating a new data structure?
+
+2. How many elements can it store?
+
+3. Am I using recursion?
+
+4. How deep can the recursion stack become?
+
+5. Am I storing the input again?
+
+6. Am I creating a matrix?
+
+7. Is the output being counted?
+
+8. Which structure can become the largest?
+
+9. What is the maximum memory alive at the same time?
+
+10. MENTAL MODEL
+
+---
+
+TIME:
+
+```
+"How many times does the work happen?"
+```
+
+SPACE:
+
+```
+"How much extra data must I keep in memory at the same time?"
+```
+
+## 31. MOST IMPORTANT RULES
+
+1. Looping through n elements does NOT automatically mean O(n) space.
+
+2. Nested loops do NOT automatically mean O(n²) space.
+
+3. Storing n elements means O(n) space.
+
+4. Storing an n × n matrix means O(n²) space.
+
+5. Recursion uses stack space.
+
+6. Recursive space depends on maximum call-stack depth.
+
+7. BFS uses queue + visited → typically O(V).
+
+8. DFS uses stack/recursion + visited → typically O(V) for graphs.
+
+9. Always distinguish input space from auxiliary space.
+
+10. Space is about the maximum memory alive simultaneously.
+
+11. ONE-LINE INTERVIEW DEFINITION
+
+---
+
+"Space complexity is the amount of additional memory an algorithm requires as the input size grows, usually measured in terms of auxiliary space."
+
+33. TIME VS SPACE
+
+---
+
+TIME:
+
+```
+O(1)
+O(log n)
+O(n)
+O(n log n)
+O(n²)
+O(2ⁿ)
+O(n!)
+```
+
+SPACE:
+
+```
+O(1)
+O(log n)
+O(n)
+O(n²)
+...
+```
+
+The same Big-O notation is used, but we are measuring different things:
+
+Time  → computational work
+
+Space → additional memory
+# SPACE COMPLEXITY — COMPLETE NOTES
+
+1. WHAT IS SPACE COMPLEXITY?
+
+---
+
+Space complexity tells us how much MEMORY an algorithm needs as the input size grows.
+
+It is usually expressed using Big O.
+
+Example:
+
+func findMax(arr []int) int {
+max := arr[0]
+
+```
+for _, x := range arr {
+    if x > max {
+        max = x
+    }
+}
+
+return max
+```
+
+}
+
+The array already exists as input.
+
+Extra variables:
+
+* max
+* x
+
+These do not grow with n.
+
+Therefore:
+
+Auxiliary Space = O(1)
+
+2. AUXILIARY SPACE VS INPUT SPACE
+
+---
+
+This distinction is very important in interviews.
+
+Input space:
+Memory occupied by the input itself.
+
+Auxiliary space:
+Additional memory used by the algorithm.
+
+Example:
+
+arr contains n elements.
+
+Input space:
+O(n)
+
+findMax() uses only a few variables:
+
+Auxiliary space:
+O(1)
+
+So when interviewers ask for "space complexity", they usually mean:
+
+```
+Auxiliary / Extra Space
+```
+
+## 3. LOOPING DOES NOT AUTOMATICALLY MEAN O(n) SPACE
+
+Example:
+
+for _, x := range arr {
+fmt.Println(x)
+}
+
+The algorithm processes n elements.
+
+But it does not store all of them.
+
+Therefore:
+
+Time  = O(n)
+Space = O(1)
+
+4. STORING DATA CHANGES SPACE COMPLEXITY
+
+---
+
+Example:
+
+result := make([]int, 0)
+
+for _, x := range arr {
+result = append(result, x)
+}
+
+The result slice can contain n elements.
+
+Therefore:
+
+Time  = O(n)
+Space = O(n)
+
+5. SIMPLE RULE
+
+---
+
+Ask:
+
+"How much EXTRA DATA can exist in memory at the same time?"
+
+If the amount stays constant:
+
+```
+O(1)
+```
+
+If it grows proportionally with n:
+
+```
+O(n)
+```
+
+If it grows as n²:
+
+```
+O(n²)
+```
+
+## 6. O(1) SPACE
+
+Only a fixed number of variables are used.
+
+Example:
+
+func sum(arr []int) int {
+total := 0
+
+```
+for _, x := range arr {
+    total += x
+}
+
+return total
+```
+
+}
+
+Variables:
+total
+x
+
+They don't grow with n.
+
+Space:
+
+```
+O(1)
+```
+
+## 7. O(n) SPACE
+
+If we store up to n elements.
+
+Example:
+
+seen := make(map[int]bool)
+
+for _, x := range arr {
+seen[x] = true
+}
+
+In the worst case, all n elements are unique.
+
+The map stores n entries.
+
+Space:
+
+```
+O(n)
+```
+
+## 8. MAP / SET / SLICE / QUEUE / STACK
+
+The data structure itself does NOT determine the complexity.
+
+The important question is:
+
+"How many elements can it contain?"
+
+Examples:
+
+map containing n elements:
+O(n)
+
+slice containing n elements:
+O(n)
+
+queue containing n elements:
+O(n)
+
+stack containing n elements:
+O(n)
+
+set containing n elements:
+O(n)
+
+9. NESTED LOOPS AND SPACE
+
+---
+
+Nested loops do NOT automatically mean O(n²) space.
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+fmt.Println(i, j)
+}
+}
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(1)
+```
+
+Why?
+
+Because only i and j are stored.
+
+We are not storing n² values.
+
+10. RECURSION USES SPACE
+
+---
+
+Every recursive function call uses stack memory.
+
+Example:
+
+func countDown(n int) {
+if n == 0 {
+return
+}
+
+```
+countDown(n - 1)
+```
+
+}
+
+Call stack:
+
+countDown(5)
+countDown(4)
+countDown(3)
+countDown(2)
+countDown(1)
+countDown(0)
+
+Maximum active calls:
+
+```
+n
+```
+
+Therefore:
+
+Space = O(n)
+
+11. RECURSION WITH LOGARITHMIC DEPTH
+
+---
+
+Example:
+
+func solve(n int) {
+if n <= 1 {
+return
+}
+
+```
+solve(n / 2)
+```
+
+}
+
+Each call cuts n in half.
+
+Example:
+
+n = 16
+
+16
+8
+4
+2
+1
+
+Number of active calls:
+
+```
+log₂(n)
+```
+
+Therefore:
+
+Space = O(log n)
+
+12. IMPORTANT RECURSION RULE
+
+---
+
+For recursion, space depends on:
+
+```
+Maximum number of ACTIVE recursive calls at once.
+```
+
+NOT:
+
+```
+Total number of recursive calls made.
+```
+
+## 13. TREE RECURSION
+
+Example:
+
+```
+         A
+       /   \
+      B     C
+     / \   / \
+    D   E F   G
+```
+
+A DFS recursion may have many total calls.
+
+But only one path is active at a time.
+
+For a balanced binary tree:
+
+```
+Height = O(log n)
+```
+
+Therefore recursive DFS space:
+
+```
+O(log n)
+```
+
+For a completely skewed tree:
+
+A
+
+B
+
+C
+
+D
+
+E
+
+Height:
+
+```
+O(n)
+```
+
+Therefore:
+
+Space = O(n)
+
+14. BFS SPACE
+
+---
+
+BFS uses a queue.
+
+For a graph:
+
+```
+visited = O(V)
+queue   = O(V)
+```
+
+Therefore:
+
+Space = O(V)
+
+where V = number of vertices.
+
+15. DFS SPACE
+
+---
+
+DFS typically uses:
+
+```
+visited
+recursion stack / explicit stack
+```
+
+For a graph:
+
+Space = O(V)
+
+For a tree, recursive DFS is often described as:
+
+```
+O(h)
+```
+
+where h = tree height.
+
+Balanced tree:
+
+```
+O(log n)
+```
+
+Skewed tree:
+
+```
+O(n)
+```
+
+## 16. MATRIX / 2D ARRAY
+
+Suppose we create:
+
+matrix[n][n]
+
+Number of stored elements:
+
+```
+n × n = n²
+```
+
+Therefore:
+
+Space = O(n²)
+
+17. GRAPH REPRESENTATION
+
+---
+
+Adjacency List:
+
+```
+Space = O(V + E)
+```
+
+where:
+
+V = vertices
+E = edges
+
+Adjacency Matrix:
+
+```
+Space = O(V²)
+```
+
+## 18. OUTPUT SPACE
+
+Sometimes the algorithm produces output that itself requires memory.
+
+Example:
+
+func double(arr []int) []int {
+result := make([]int, len(arr))
+
+```
+for i, x := range arr {
+    result[i] = x * 2
+}
+
+return result
+```
+
+}
+
+The result contains n elements.
+
+Output space:
+
+```
+O(n)
+```
+
+Auxiliary space depends on whether the output is counted.
+
+In interviews, clarify whether they want:
+
+```
+Auxiliary Space
+```
+
+or
+
+```
+Total Space including Output
+```
+
+## 19. MULTIPLE DATA STRUCTURES
+
+Add the space requirements.
+
+Example:
+
+map:
+O(n)
+
+queue:
+O(n)
+
+Total:
+
+```
+O(n) + O(n)
+= O(2n)
+= O(n)
+```
+
+Another example:
+
+map:
+O(n)
+
+matrix:
+O(n²)
+
+Total:
+
+```
+O(n) + O(n²)
+= O(n²)
+```
+
+Keep the dominant term.
+
+20. CONSTANTS ARE DROPPED
+
+---
+
+Example:
+
+Two arrays of size n:
+
+```
+O(n) + O(n)
+
+= O(2n)
+```
+
+Drop constants:
+
+```
+O(n)
+```
+
+## 21. TIME AND SPACE ARE INDEPENDENT
+
+An algorithm can have:
+
+```
+Time  = O(n)
+Space = O(1)
+```
+
+Example:
+
+Find maximum in an array.
+
+Or:
+
+```
+Time  = O(n)
+Space = O(n)
+```
+
+Example:
+
+Copy an array.
+
+Or:
+
+```
+Time  = O(n²)
+Space = O(1)
+```
+
+Example:
+
+Nested loops that only compare/print values.
+
+22. IMPORTANT EXAMPLE
+
+---
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+// process
+}
+}
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(1)
+```
+
+Because i and j are reused.
+
+Now:
+
+result := [][]int{}
+
+for i := 0; i < n; i++ {
+row := []int{}
+
+```
+for j := 0; j < n; j++ {
+    row = append(row, i+j)
+}
+
+result = append(result, row)
+```
+
+}
+
+Now we store n² values.
+
+Time:
+
+```
+O(n²)
+```
+
+Space:
+
+```
+O(n²)
+```
+
+## 23. "AT THE SAME TIME" IS IMPORTANT
+
+Space complexity is about memory that needs to be alive simultaneously.
+
+Example:
+
+for i := 0; i < n; i++ {
+temp := make([]int, 100)
+process(temp)
+}
+
+Even though a new slice is created every iteration, only a fixed-size slice is needed at a time.
+
+Ignoring implementation details such as allocator behavior:
+
+Space = O(1)
+
+But:
+
+result := [][]int{}
+
+for i := 0; i < n; i++ {
+temp := make([]int, n)
+result = append(result, temp)
+}
+
+Now all rows are retained.
+
+Space:
+
+```
+O(n²)
+```
+
+## 24. SORTING ALGORITHMS
+
+Common auxiliary space:
+
+Merge Sort:
+O(n)
+
+Heap Sort:
+O(1)
+
+Quick Sort:
+Average: O(log n)
+Worst:   O(n)
+
+The extra space in Quick Sort mainly comes from the recursion stack.
+
+25. MONOTONIC QUEUE EXAMPLE
+
+---
+
+Sliding Window Maximum:
+
+The deque can contain at most k indices.
+
+Therefore:
+
+Space = O(k)
+
+If k <= n, this can also be expressed as:
+
+O(n) worst case.
+
+26. HASH MAP EXAMPLE
+
+---
+
+Two Sum:
+
+seen := make(map[int]int)
+
+For every element:
+
+```
+store it in the map
+```
+
+Worst case:
+
+```
+n elements stored
+```
+
+Therefore:
+
+Time  = O(n)
+Space = O(n)
+
+27. COMMON SPACE COMPLEXITIES
+
+---
+
+O(1)
+Constant extra memory
+
+O(log n)
+Logarithmic recursion/stack
+
+O(n)
+Linear storage
+
+O(n log n)
+Less common for auxiliary memory
+
+O(n²)
+Matrix / n × n storage
+
+O(2ⁿ)
+Usually associated with exponential-sized generated results
+
+O(n!)
+Can occur when generating all permutations
+
+28. HOW TO CALCULATE SPACE COMPLEXITY
+
+---
+
+STEP 1:
+Identify every extra data structure.
+
+Examples:
+
+```
+map
+set
+slice
+queue
+stack
+recursion stack
+matrix
+```
+
+STEP 2:
+Determine the maximum number of elements each can hold.
+
+STEP 3:
+Calculate their space.
+
+STEP 4:
+Add them.
+
+STEP 5:
+Drop constants and lower-order terms.
+
+Example:
+
+map:
+O(n)
+
+queue:
+O(n)
+
+recursion:
+O(log n)
+
+Total:
+
+```
+O(n) + O(n) + O(log n)
+
+= O(n)
+```
+
+## 29. QUICK INTERVIEW CHECKLIST
+
+When asked for space complexity, ask yourself:
+
+1. Am I creating a new data structure?
+
+2. How many elements can it store?
+
+3. Am I using recursion?
+
+4. How deep can the recursion stack become?
+
+5. Am I storing the input again?
+
+6. Am I creating a matrix?
+
+7. Is the output being counted?
+
+8. Which structure can become the largest?
+
+9. What is the maximum memory alive at the same time?
+
+10. MENTAL MODEL
+
+---
+
+TIME:
+
+```
+"How many times does the work happen?"
+```
+
+SPACE:
+
+```
+"How much extra data must I keep in memory at the same time?"
+```
+
+## 31. MOST IMPORTANT RULES
+
+1. Looping through n elements does NOT automatically mean O(n) space.
+
+2. Nested loops do NOT automatically mean O(n²) space.
+
+3. Storing n elements means O(n) space.
+
+4. Storing an n × n matrix means O(n²) space.
+
+5. Recursion uses stack space.
+
+6. Recursive space depends on maximum call-stack depth.
+
+7. BFS uses queue + visited → typically O(V).
+
+8. DFS uses stack/recursion + visited → typically O(V) for graphs.
+
+9. Always distinguish input space from auxiliary space.
+
+10. Space is about the maximum memory alive simultaneously.
+
+11. ONE-LINE INTERVIEW DEFINITION
+
+---
+
+"Space complexity is the amount of additional memory an algorithm requires as the input size grows, usually measured in terms of auxiliary space."
+
+33. TIME VS SPACE
+
+---
+
+TIME:
+
+```
+O(1)
+O(log n)
+O(n)
+O(n log n)
+O(n²)
+O(2ⁿ)
+O(n!)
+```
+
+SPACE:
+
+```
+O(1)
+O(log n)
+O(n)
+O(n²)
+...
+```
+
+The same Big-O notation is used, but we are measuring different things:
+
+Time  → computational work
+
+Space → additional memory

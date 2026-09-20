@@ -1,0 +1,913 @@
+# TIME COMPLEXITY
+
+1. WHAT IS TIME COMPLEXITY?
+
+---
+
+Time complexity tells us how the amount of work done by an algorithm
+grows as the input size (n) grows.
+
+It does NOT mean actual execution time in seconds.
+
+Example:
+
+for i := 0; i < n; i++ {
+// work
+}
+
+If n = 10     → ~10 iterations
+If n = 100    → ~100 iterations
+If n = 1000   → ~1000 iterations
+
+Therefore:
+
+Time Complexity = O(n)
+
+2. WHY DO WE USE BIG O?
+
+---
+
+Actual execution time depends on:
+
+* CPU
+* RAM
+* Programming language
+* Compiler
+* Operating system
+* Hardware
+
+Big O focuses on how the algorithm GROWS as n becomes large.
+
+We care about the growth rate rather than exact execution time.
+
+3. COMMON TIME COMPLEXITIES
+
+---
+
+From generally FASTEST to SLOWEST:
+
+O(1)
+O(log n)
+O(n)
+O(n log n)
+O(n²)
+O(n³)
+O(2ⁿ)
+O(n!)
+
+For large n:
+
+O(log n) < O(n) < O(n log n) < O(n²)
+
+4. O(1) — CONSTANT TIME
+
+---
+
+The amount of work does not depend on n.
+
+Example:
+
+x := arr[5]
+
+Whether the array contains:
+
+10 elements
+1,000 elements
+1,000,000 elements
+
+The operation is still approximately one direct access.
+
+Therefore:
+
+O(1)
+
+Common examples:
+
+* Array index access
+* Stack push/pop
+* Queue front
+* Hash map lookup (average case)
+* Accessing a variable
+
+5. O(log n) — LOGARITHMIC TIME
+
+---
+
+The problem becomes smaller by a factor at every step.
+
+Typical pattern:
+
+n
+n/2
+n/4
+n/8
+n/16
+...
+
+Example:
+
+Binary Search
+
+If n = 16:
+
+16 → 8 → 4 → 2 → 1
+
+log₂(16) = 4
+
+If n = 1,000,000:
+
+log₂(1,000,000) ≈ 20
+
+Therefore binary search is:
+
+O(log n)
+
+Common examples:
+
+* Binary Search
+* Balanced BST search
+* Heap insertion
+* Heap deletion
+
+6. O(n) — LINEAR TIME
+
+---
+
+The algorithm processes each element once.
+
+Example:
+
+for i := 0; i < n; i++ {
+// work
+}
+
+Number of operations grows with n.
+
+n = 10      → ~10
+n = 100     → ~100
+n = 1000    → ~1000
+
+Therefore:
+
+O(n)
+
+Common examples:
+
+* Array traversal
+* Linear search
+* Finding maximum/minimum
+* Frequency counting
+* BFS
+* DFS
+* Monotonic queue
+
+7. O(n²) — QUADRATIC TIME
+
+---
+
+Usually occurs when we process n elements for each of n elements.
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+// work
+}
+}
+
+Outer loop = n
+Inner loop = n
+
+Total:
+
+n × n = n²
+
+Therefore:
+
+O(n²)
+
+Example:
+
+n = 10       → 100
+n = 100      → 10,000
+n = 1,000    → 1,000,000
+n = 10,000   → 100,000,000
+
+8. O(n³) — CUBIC TIME
+
+---
+
+Three nested loops:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+for k := 0; k < n; k++ {
+// work
+}
+}
+}
+
+Total:
+
+n × n × n
+
+= n³
+
+Therefore:
+
+O(n³)
+
+9. O(n log n)
+
+---
+
+Very common in sorting algorithms.
+
+Typical idea:
+
+Divide the problem
++
+Process all elements
+
+Example:
+
+Merge Sort
+
+The problem is divided into approximately log n levels.
+
+At each level, approximately n work is done.
+
+Therefore:
+
+n × log n
+
+= O(n log n)
+
+Common examples:
+
+* Merge Sort
+* Heap Sort
+* Quick Sort (average case)
+
+10. O(2ⁿ) — EXPONENTIAL TIME
+
+---
+
+Usually occurs when each recursive call creates multiple branches.
+
+Example concept:
+
+```
+                f(n)
+               /    \
+           f(n-1)  f(n-2)
+            /  \     /  \
+           ... ...  ... ...
+```
+
+The number of operations grows exponentially.
+
+Therefore:
+
+O(2ⁿ)
+
+Classic example:
+
+Naive recursive Fibonacci.
+
+11. O(n!) — FACTORIAL TIME
+
+---
+
+Usually occurs when generating all possible permutations.
+
+For n elements:
+
+Number of permutations = n!
+
+Examples:
+
+3!  = 6
+5!  = 120
+10! = 3,628,800
+
+Therefore:
+
+Generating all permutations = O(n!)
+
+12. IMPORTANT LOOP RULES
+
+---
+
+ONE LOOP:
+
+for i := 0; i < n; i++ {
+}
+
+O(n)
+
+TWO NESTED LOOPS:
+
+for i := 0; i < n; i++ {
+for j := 0; j < n; j++ {
+}
+}
+
+O(n²)
+
+THREE NESTED LOOPS:
+
+O(n³)
+
+TWO SEQUENTIAL LOOPS:
+
+for i := 0; i < n; i++ {
+}
+
+for i := 0; i < n; i++ {
+}
+
+n + n
+= 2n
+= O(n)
+
+13. NESTED LOOPS — MULTIPLY
+
+---
+
+If operations are nested, multiply their complexities.
+
+Example:
+
+Outer loop     = O(n)
+Inner loop     = O(n)
+
+Therefore:
+
+O(n × n)
+= O(n²)
+
+Another example:
+
+Outer loop     = O(n)
+Inner loop     = O(log n)
+
+Therefore:
+
+O(n × log n)
+= O(n log n)
+
+14. SEQUENTIAL OPERATIONS — ADD
+
+---
+
+If operations happen one after another, add them.
+
+Example:
+
+First part = O(n)
+Second part = O(n)
+
+Total:
+
+O(n + n)
+= O(2n)
+= O(n)
+
+Example:
+
+O(n) + O(n²)
+
+= O(n + n²)
+
+The dominant term is n².
+
+Therefore:
+
+O(n²)
+
+15. CONSTANT INNER LOOP
+
+---
+
+This is important.
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < 10; j++ {
+// work
+}
+}
+
+The inner loop always runs 10 times.
+
+Therefore:
+
+n × 10
+= 10n
+= O(n)
+
+NOT O(n²).
+
+16. DROP CONSTANTS
+
+---
+
+Big O ignores constant multipliers.
+
+O(2n)
+= O(n)
+
+O(10n)
+= O(n)
+
+O(100n)
+= O(n)
+
+17. DROP LOWER-ORDER TERMS
+
+---
+
+Keep the term that grows fastest.
+
+Example:
+
+O(n² + n)
+
+Becomes:
+
+O(n²)
+
+Example:
+
+O(n³ + n² + n)
+
+Becomes:
+
+O(n³)
+
+Example:
+
+O(n log n + n)
+
+Becomes:
+
+O(n log n)
+
+18. i += 1 vs i *= 2
+
+---
+
+VERY IMPORTANT.
+
+CASE 1:
+
+for i := 0; i < n; i++ {
+}
+
+Values:
+
+0
+1
+2
+3
+4
+5
+...
+
+Number of iterations grows with n.
+
+Therefore:
+
+O(n)
+
+CASE 2:
+
+for i := 1; i < n; i *= 2 {
+}
+
+Values:
+
+1
+2
+4
+8
+16
+32
+64
+...
+
+The value doubles every iteration.
+
+Therefore:
+
+O(log n)
+
+Similarly:
+
+for i := n; i > 0; i /= 2 {
+}
+
+is:
+
+O(log n)
+
+19. IF STATEMENTS
+
+---
+
+An if statement itself is usually O(1).
+
+Example:
+
+if x > 10 {
+fmt.Println(x)
+}
+
+O(1)
+
+But if the if contains a loop:
+
+if x > 10 {
+for i := 0; i < n; i++ {
+}
+}
+
+Worst-case:
+
+O(n)
+
+20. DIFFERENT INPUT VARIABLES
+
+---
+
+If there are two independent input sizes, keep them separate.
+
+Example:
+
+for i := 0; i < n; i++ {
+}
+
+for j := 0; j < m; j++ {
+}
+
+Complexity:
+
+O(n + m)
+
+Nested:
+
+for i := 0; i < n; i++ {
+for j := 0; j < m; j++ {
+}
+}
+
+Complexity:
+
+O(n × m)
+
+Do NOT automatically convert this to O(n²).
+
+Only use O(n²) when both inputs are related/effectively the same size.
+
+21. RECURSION
+
+---
+
+When analyzing recursive code, ask:
+
+1. How many recursive calls are created?
+2. How much work does each call do?
+3. How much smaller does the input become?
+
+Example:
+
+f(n) → f(n-1)
+
+One recursive call, input decreases by 1.
+
+Usually:
+
+O(n)
+
+Example:
+
+f(n) → f(n/2)
+
+Input is divided by 2.
+
+Usually:
+
+O(log n)
+
+Example:
+
+f(n) → f(n-1) + f(n-2)
+
+Two branches.
+
+Can lead to:
+
+O(2ⁿ)
+
+depending on the exact recurrence/implementation.
+
+22. BEST, AVERAGE AND WORST CASE
+
+---
+
+An algorithm can have different complexity depending on the input.
+
+Example: Linear Search
+
+Array:
+
+[10, 20, 30, 40, 50]
+
+Searching for 10:
+
+Found immediately.
+
+Best case:
+
+O(1)
+
+Searching for 50:
+
+Need to inspect almost every element.
+
+Worst case:
+
+O(n)
+
+When an interview asks:
+
+"What is the time complexity?"
+
+Usually give the WORST-CASE complexity unless the question specifies otherwise.
+
+23. IMPORTANT: NESTED LOOP ≠ ALWAYS O(n²)
+
+---
+
+Do not blindly see two loops and say O(n²).
+
+Example:
+
+for i := 0; i < n; i++ {
+for j := 0; j < 10; j++ {
+}
+}
+
+O(n)
+
+Another example:
+
+for i := 1; i < n; i *= 2 {
+for j := 0; j < n; j++ {
+}
+}
+
+Outer = O(log n)
+Inner = O(n)
+
+Therefore:
+
+O(n log n)
+
+Always determine how many times each loop actually executes.
+
+24. AMORTIZED TIME COMPLEXITY
+
+---
+
+Sometimes one operation can be expensive, but expensive operations
+cannot happen frequently.
+
+Example:
+
+Dynamic array append.
+
+Most appends:
+
+O(1)
+
+Occasionally the array becomes full and needs resizing/copying:
+
+O(n)
+
+But over many operations, the average cost per operation is:
+
+O(1) amortized
+
+This is called:
+
+AMORTIZED TIME COMPLEXITY.
+
+25. MONOTONIC QUEUE EXAMPLE
+
+---
+
+A monotonic queue has a while loop:
+
+while len(queue) > 0 && queueBack <= current {
+removeBack()
+}
+
+It might look like O(n²).
+
+But it is actually:
+
+O(n) amortized
+
+Why?
+
+Every element:
+
+* Enters the deque once.
+* Can be removed from the deque at most once.
+
+Therefore across the entire algorithm:
+
+Total insertions ≈ n
+Total removals ≈ n
+
+Total work ≈ 2n
+
+Therefore:
+
+O(n)
+
+26. TIME COMPLEXITY CHEAT SHEET
+
+---
+
+O(1)
+Constant
+
+O(log n)
+Input repeatedly divided/reduced
+
+O(n)
+Process every element once
+
+O(n log n)
+Divide + process all elements
+
+O(n²)
+Compare/process pairs
+
+O(n³)
+Three levels of nested processing
+
+O(2ⁿ)
+Exponential branching
+
+O(n!)
+Generate all permutations
+
+27. HOW TO ANALYZE CODE IN AN INTERVIEW
+
+---
+
+When given code, think in this order:
+
+STEP 1:
+How many times does each loop run?
+
+STEP 2:
+Are loops nested or sequential?
+
+STEP 3:
+Does the loop variable increase normally or exponentially?
+
+i++
+
+```
+→ usually O(n)
+```
+
+i *= 2
+
+```
+→ usually O(log n)
+```
+
+STEP 4:
+Does recursion exist?
+
+If yes:
+
+* How many recursive calls?
+* How much does n shrink?
+
+STEP 5:
+Are there multiple independent input sizes?
+
+Use:
+
+O(n + m)
+
+or:
+
+O(n × m)
+
+STEP 6:
+Simplify.
+
+Drop constants:
+
+O(2n) → O(n)
+
+Drop lower-order terms:
+
+O(n² + n) → O(n²)
+
+28. MOST IMPORTANT PATTERNS TO MEMORIZE
+
+---
+
+One loop:
+
+O(n)
+
+Two sequential loops:
+
+O(n)
+
+Two nested loops:
+
+O(n²)
+
+Three nested loops:
+
+O(n³)
+
+Loop that halves/doubles:
+
+O(log n)
+
+n loop + log n loop:
+
+O(n log n)
+
+Two different input sizes:
+
+O(n + m)
+
+Nested different input sizes:
+
+O(n × m)
+
+Binary search:
+
+O(log n)
+
+Linear search:
+
+O(n)
+
+Merge sort:
+
+O(n log n)
+
+Naive recursive Fibonacci:
+
+O(2ⁿ)
+
+All permutations:
+
+O(n!)
+
+29. FINAL MENTAL MODEL
+
+---
+
+Don't count the number of lines of code.
+
+Ask:
+
+"HOW MANY TIMES CAN THIS WORK HAPPEN AS n GROWS?"
+
+That number/growth pattern determines the time complexity.
+
+QUICK ORDER TO MEMORIZE:
+
+O(1)
+↓
+O(log n)
+↓
+O(n)
+↓
+O(n log n)
+↓
+O(n²)
+↓
+O(n³)
+↓
+O(2ⁿ)
+↓
+O(n!)
+
+FAST → SLOW
