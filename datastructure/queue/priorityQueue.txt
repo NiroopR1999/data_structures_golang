@@ -1,0 +1,65 @@
+PRIORITY QUEUE — QUICK NOTES
+=============================
+
+WHAT IS A PRIORITY QUEUE?
+-------------------------
+A Priority Queue is an Abstract Data Type (ADT) where
+elements are removed based on priority, not insertion order.
+
+A Priority Queue is just a heap where each item carries a priority, and the heap is ordered using that priority.
+
+Highest-priority element is removed first.
+
+Example:
+
+Task A → Priority 2
+Task B → Priority 5
+Task C → Priority 1
+
+Remove → Task B
+
+
+PRIORITY QUEUE vs NORMAL QUEUE
+------------------------------
+Normal Queue:
+    First In → First Out (FIFO)
+
+Priority Queue:
+    Highest Priority → First Out
+
+
+IMPLEMENTATION
+--------------
+A Priority Queue is commonly implemented using a Heap.
+
+Max Heap:
+    Larger value = Higher priority
+
+Min Heap:
+    Smaller value = Higher priority
+
+
+MAIN OPERATIONS
+---------------
+Insert(item, priority)
+    Add an item with a priority.
+
+Peek()
+    View the highest-priority item without removing it.
+
+Extract()
+    Remove the highest-priority item.
+
+
+COMPLEXITY USING HEAP
+---------------------
+Insert    → O(log n)
+Peek      → O(1)
+Extract   → O(log n)
+
+
+IMPORTANT
+---------
+Priority Queue = ADT (WHAT)
+
+Heap = Common implementation (HOW)
